@@ -1,0 +1,43 @@
+---
+driver:
+  name: vagrant
+
+transport:
+  name: ssh
+
+provisioner:
+  name: chef_zero
+
+verifier:
+  name: inspec
+  sudo: true
+
+platforms:
+  - name: centos-6
+  - name: centos-7
+  - name: ubuntu-16.04
+  - name: ubuntu-18.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[audit::default]
+    attributes:
+      audit:
+        reporter: json-file
+        profiles:
+          - name: ssh-hardening
+            url: https://github.com/dev-sec/tests-ssh-hardening/archive/master.zip
+          - name: ssh-baseline
+            supermarket: dev-sec/ssh-baseline
+  - name: hash
+    run_list:
+      - recipe[audit::default]
+    attributes:
+      audit:
+        reporter: json-file
+        profiles:
+          ssh-hardening:
+            url: https://github.com/dev-sec/tests-ssh-hardening/archive/master.zip
+          ssh-baseline:
+            supermarket: dev-sec/ssh-baseline

@@ -1,0 +1,10 @@
+Lint/UselessAssignment:
+  Exclude:
+    - 'spec/unit/report/audit_report_spec.rb'
+    - 'test/integration/default/default.rb'
+    - 'test/kitchen-automate/recipes/upload_profile.rb'
+
+Naming/AccessorMethodName:
+  Exclude:
+    - 'examples/chef-server/Vagrantfile'
+    - 'spec/unit/report/audit_report_spec.rb'
