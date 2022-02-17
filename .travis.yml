@@ -35,20 +35,20 @@ matrix:
   # Run the style, unit and chefspec tests
   - rvm: 2.6.5
     script: rake $SUITE
-    env: SUITE=test:integration OS='default-centos-7'
+    env: CHEF_INTEGRATION OS='default-centos-7'
   # Run integration tests with test-kitchen
   - rvm: 2.6.5
     script: rake $SUITE
-    env: SUITE=test:integration OS='default-centos-7'
+    env: CHEF_INTEGRATION_SUITE=test:CHEF_integration OS='default-centos-7'
   - rvm: 2.6.5
     script: rake $SUITE
-    env: SUITE=test:integration OS='default-ubuntu-1804'
+    env: CHEF_INTEGRATION_SUITE=test:integration OS='default-ubuntu-1804'
   - rvm: 2.6.5
     script: rake $SUITE
-    env: SUITE=test:integration OS='missing-profile-no-fail-ubuntu-1804'
+    env: CHEF_INTEGRATION_SUITE=test:integration OS='missing-profile-no-fail-ubuntu-1804'
   - rvm: 2.6.5
     script: rake $SUITE && exit 1 || echo "OK"
-    env: SUITE=test:integration OS='missing-profile-fail-ubuntu-1804'
+    env: CHEF_INTEGRATION_SUITE=test:integration OS='missing-profile-fail-ubuntu-1804'
 
   # Next 5 suites are disabled due to an issue with the gem() inspec resource
   # see https://github.com/chef-cookbooks/audit/issues/406
@@ -72,16 +72,16 @@ matrix:
 
   - rvm: 2.6.5
     script: rake $SUITE
-    env: SUITE=test:integration OS='inspec-attributes-ubuntu-1804'
+    env: CHEF_INTEGRATION_SUITE=test:integration OS='inspec-attributes-ubuntu-1804'
   - rvm: 2.6.5
     script: rake $SUITE
-    env: SUITE=test:integration OS='chef-node-enabled-ubuntu-1804'
+    env: CHEF_INTEGRATION_SUITE=test:integration OS='chef-node-enabled-ubuntu-1804'
   - rvm: 2.6.5
     script: rake $SUITE
-    env: SUITE=test:integration OS='chef-node-disabled-ubuntu-1804'
+    env: CHEF_INTEGRATION_SUITE=test:integration OS='chef-node-disabled-ubuntu-1804'
   - rvm: 2.6.5
     script: rake $SUITE
-    env: SUITE=test:integration OS='hash-centos-7'
+    env: CHEF_INTEGRATION_SUITE=test:integration OS='hash-centos-7'
   - rvm: 2.6.5
     script: rake $SUITE
-    env: SUITE=test:integration OS='hash-ubuntu-1804'
+    env: CHEF_INTEGRATION_SUITE=test:integration OS='hash-ubuntu-1804'
