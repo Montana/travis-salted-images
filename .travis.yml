@@ -34,7 +34,8 @@ matrix:
   include:
   # Run the style, unit and chefspec tests
   - rvm: 2.6.5
-    script: rake
+    script: rake $SUITE
+    env: SUITE=test:integration OS='default-centos-7'
   # Run integration tests with test-kitchen
   - rvm: 2.6.5
     script: rake $SUITE
