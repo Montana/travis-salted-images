@@ -28,8 +28,8 @@ before_install:
 - CHEF_LICENSE="accept-no-persist" sudo chef gem install webmock
 - eval "$(chef shell-init bash)"
 - chef --version
-- kitchen list
-
+- cookstyle --version
+ 
 matrix:
   include:
   # Run the style, unit and chefspec tests
