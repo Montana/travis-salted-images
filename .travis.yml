@@ -1,3 +1,48 @@
+stages:   
+
+  - name: Montana Mendy's Chef Integration
+
+  - name: Nightly operations for Chef
+    if: branch = master AND type = cron AND env(RUN_NIGHTLY) = yes
+
+  - name: Nightly release of Chef
+    if: branch = master AND type = cron AND env(RUN_NIGHTLY) = yes
+    
+  - name: Trigger nightly checks for Chef updates (this can be subvariable)
+    if: branch = master AND type = cron AND env(RUN_NIGHTLY) = yes
+    
+  - name: Recreate the Chef scheduler 
+    if: "((branch IN (master, develop) && type = push) OR branch =~ /.*env.*/ OR commit_message
+    =~ /\\[recreate env\\]/) AND commit_message !~ /\\[delete env\\]/ AND type !=
+    cron AND commit_message !~ /\\[execute .*. test\\]/ AND commit_message !~ /\\[start
+    recreate scheduler\\]/"
+    
+  - name: Chef Clusters destroy on Cron
+    if: "(type = cron AND branch = develop) OR commit_message =~ /\\[start recreate
+    scheduler\\]/ OR commit_message =~ /\\[destroy stale clusters\\]/"
+    
+  - name: Restart the Chef Montana Mendy branch and execute ChefSpec tests again if the commit depth goes beyond 5
+    if: "((branch IN (master, develop) && type = push) OR branch =~ /.*env.*/ OR commit_message
+    =~ /\\[recreate env\\]/) AND commit_message !~ /\\[delete env\\]/ AND type !=
+    cron AND commit_message !~ /\\[execute .*. test\\]/ AND commit_message !~ /\\[start
+    recreate scheduler\\]/"
+    
+  - name: Destroy orphaned clusters within Docker to save payload on Chef 
+    if: "(type = cron AND branch = develop) OR commit_message =~ /\\[start recreate
+    scheduler\\]/ OR commit_message =~ /\\[destroy orphaned clusters\\]/"
+    
+  - name: Recreate a ChefSpec instance if there's a cron present or a branch push with --force
+    if: "(type = cron AND branch = develop) OR commit_message =~ /\\[start recreate
+    scheduler\\]/ OR commit_message =~ /\\[recreate selected clusters\\]/"
+    
+  - name: Only trigger when a build has passed through Travis and Montana has approved it
+    if: >-
+      branch = master
+      AND type != pull_request
+      AND type != cron
+      AND tag !~ /(-rc)/
+      AND commit_message =~ /\[terraform\travisci/montanamendy* (release candidate|(major|minor|patch) release)\]/   
+
 dist: xenial
 
 addons:
