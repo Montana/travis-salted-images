@@ -7,13 +7,6 @@ stages:
   branch = master AND \
   type = push
   
-  - name: ChefSpec-Deploy
-    if: commit_message =~ /^.*(?i:travis-fvt).*$/"
-  - name: chef-pr
-    if: branch = master AND type = pull_request
-  - name: deploy-chef
-    if: branch = master AND type != pull_request
-  
  - name: ChefSpec using Hay
  if: /hay/ =~ 'ChefSpecMontana' 
 /y/.match('ChefSpec') 
