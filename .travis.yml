@@ -145,6 +145,3 @@ matrix:
   - rvm: 2.6.5
     script: rake $SUITE
     env: SUITE=test:integration OS='hash-ubuntu-1804'
-    
-after_install:
-  - cat .kitchen/logs/kitchen.log
