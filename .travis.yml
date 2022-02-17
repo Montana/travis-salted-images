@@ -1,6 +1,22 @@
-stages:   
+stages:
 
   - name: Montana Mendy's Chef Integration
+  if: 
+  env(PRIOR_VERSION) IS present AND \
+  env(PRIOR_VERSION) != env(RELEASE_VERSION) AND \
+  branch = master AND \
+  type = push
+  
+  - name: ChefSpec-Deploy
+    if: commit_message =~ /^.*(?i:travis-fvt).*$/"
+  - name: chef-pr
+    if: branch = master AND type = pull_request
+  - name: deploy-chef
+    if: branch = master AND type != pull_request
+  
+ - name: ChefSpec using Hay
+ if: /hay/ =~ 'ChefSpecMontana' 
+/y/.match('ChefSpec') 
 
   - name: Nightly operations for Chef
     if: branch = master AND type = cron AND env(RUN_NIGHTLY) = yes
@@ -41,7 +57,7 @@ stages:
       AND type != pull_request
       AND type != cron
       AND tag !~ /(-rc)/
-      AND commit_message =~ /\[terraform\travisci/montanamendy* (release candidate|(major|minor|patch) release)\]/   
+      AND commit_message =~ /\[chef\travisci/montanamendy* (release candidate|(major|minor|patch) release)\]/   
 
 dist: xenial
 
@@ -52,7 +68,6 @@ addons:
     packages:
       - chef-workstation
 
-# Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
 
 branches:
@@ -130,3 +145,7 @@ matrix:
   - rvm: 2.6.5
     script: rake $SUITE
     env: SUITE=test:integration OS='hash-ubuntu-1804'
+    
+after_install:
+  - cat .kitchen/logs/kitchen.log
+
