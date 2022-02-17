@@ -7,9 +7,9 @@ stages:
   branch = master AND \
   type = push
   
- - name: ChefSpec using Hay
- if: /hay/ =~ 'ChefSpecMontana' 
-/y/.match('ChefSpec') 
+   - name: ChefSpec using Hay
+  if: /hay/ =~ 'ChefSpecMontana' 
+  /y/.match('ChefSpec') 
 
   - name: Nightly operations for Chef
     if: branch = master AND type = cron AND env(RUN_NIGHTLY) = yes
