@@ -148,4 +148,3 @@ matrix:
     
 after_install:
   - cat .kitchen/logs/kitchen.log
-
